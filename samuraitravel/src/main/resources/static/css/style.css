@@ -53,6 +53,7 @@ html {
    transition: 0.1s;
  }
  
+ 
  .samuraitravel-btn:hover {
    opacity: 0.8;   
  }
@@ -143,6 +144,12 @@ html {
 .samurai-dtable{
 	display: table-cell;
  } 
+.samurai-favorite{
+	 max-width: 1000px;
+    max-height: 500px; /* お好みの高さに調整してください */
+    width: 100%; /* 必要に応じて幅の調整も行います */
+    height: 270px; /* 高さを自動調整するために使用します */
+}
  
 .select {
   font-size: 0.9rem;

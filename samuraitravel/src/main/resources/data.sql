@@ -89,7 +89,7 @@ INSERT IGNORE INTO reservations (id, house_id, user_id, checkin_date, checkout_d
 
 --reputationsテーブル
 INSERT IGNORE INTO reputations (id, house_id, user_id, score, description) VALUES (1, 1, 1, 1,'部屋が綺麗で快適に過ごせました');
---INSERT IGNORE INTO reputations (id, house_id, user_id, score, description) VALUES (2, 2, 2, 2,'部屋が綺麗で快適に過ごせました');
+INSERT IGNORE INTO reputations (id, house_id, user_id, score, description) VALUES (2, 2, 2, 2,'部屋が綺麗で快適に過ごせました');
 INSERT IGNORE INTO reputations (id, house_id, user_id, score, description) VALUES (3, 3, 3, 3,'部屋が綺麗で快適に過ごせました');
 INSERT IGNORE INTO reputations (id, house_id, user_id, score, description) VALUES (4, 4, 4, 4,'部屋が綺麗で快適に過ごせました');
 INSERT IGNORE INTO reputations (id, house_id, user_id, score, description) VALUES (5, 5, 5, 5,'部屋が綺麗で快適に過ごせました');
@@ -101,6 +101,19 @@ INSERT IGNORE INTO reputations (id, house_id, user_id, score, description) VALUE
 INSERT IGNORE INTO reputations (id, house_id, user_id, score, description) VALUES (11, 11, 11, 1,'部屋が綺麗で快適に過ごせました');
 INSERT IGNORE INTO reputations (id, house_id, user_id, score, description) VALUES (12, 12, 12, 2,'部屋が綺麗で快適に過ごせました');
 
+--favoritesテーブル
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (1, 1, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (2, 2, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (3, 3, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (4, 4, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (5, 5, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (6, 6, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (7, 7, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (8, 8, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (9, 9, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (10, 10, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (11, 11, 1);
+INSERT IGNORE INTO favorites (id, house_id, user_id) VALUES (12, 12, 1);
 
 
 

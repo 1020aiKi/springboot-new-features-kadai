@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.samuraitravel.entity.Favorite;
 import com.example.samuraitravel.entity.House;
 import com.example.samuraitravel.entity.Reputation;
+import com.example.samuraitravel.entity.User;
 import com.example.samuraitravel.form.ReservationInputForm;
+import com.example.samuraitravel.repository.FavoriteRepository;
 import com.example.samuraitravel.repository.HouseRepository;
 import com.example.samuraitravel.repository.ReputationRepository;
 import com.example.samuraitravel.security.UserDetailsImpl;
+import com.example.samuraitravel.service.FavoriteService;
 
 
 @Controller
@@ -28,12 +32,16 @@ import com.example.samuraitravel.security.UserDetailsImpl;
 public class HouseController {
 	private final HouseRepository houseRepository;     
 	private final ReputationRepository reputationRepository;
+	private final FavoriteRepository favoriteRepository;
+	 private final FavoriteService favoriteService;  
 	
 	
     
-    public HouseController(HouseRepository houseRepository,ReputationRepository reputationRepository) {
+    public HouseController(HouseRepository houseRepository,ReputationRepository reputationRepository, FavoriteRepository favoriteRepository,FavoriteService favoriteService) {
         this.houseRepository = houseRepository;      
         this.reputationRepository = reputationRepository;
+        this.favoriteRepository = favoriteRepository;
+        this.favoriteService = favoriteService;
         
     }     
   
@@ -82,17 +90,27 @@ public class HouseController {
         return "houses/index";
     }
     @GetMapping("/{id}")
-    public String show(@PathVariable(name = "id") Integer id, Model model,Pageable pageable,@AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+    public String show(@PathVariable(name = "id") Integer id,@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
         House house = houseRepository.getReferenceById(id);
         List<Reputation> allReputations = reputationRepository.findByHouseIdOrderByCreatedAtDesc(id);
-        		
+        Favorite favorite = null;
+        boolean isFavorite = false;
+        if (userDetailsImpl != null) {
+        	User user = userDetailsImpl.getUser(); 
+             isFavorite = favoriteService.isFavorite(house,user);
+             if (isFavorite) {
+                 favorite = favoriteRepository.findByHouseAndUser(house, user);
+             }    
+        }	
         
               
-        model.addAttribute("house", house);        
+        model.addAttribute("house", house);    
+        model.addAttribute("favorite", favorite);
+        model.addAttribute("isFavorite", isFavorite);       
         model.addAttribute("reputationPage", allReputations);
         model.addAttribute("reservationInputForm", new ReservationInputForm());
         
         return "houses/show";
     }  
+   }
     
-}

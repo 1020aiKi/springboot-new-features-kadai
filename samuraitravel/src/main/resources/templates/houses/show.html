@@ -21,13 +21,26 @@
 			<div class="container pt-4 pb-5 samuraitravel-container">
 				<div class="row justify-content-center">
 					<div class="col-xxl-9 col-xl-10 col-lg-11">
+						  <div class="d-flex justify-content-between mb-4">
 						<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-							<ol class="breadcrumb mb-0">
+							<ol class="breadcrumb mb-0 d-flex">
 								<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
 								<li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li>
 								<li class="breadcrumb-item active" aria-current="page">民宿詳細</li>
 							</ol>
 						</nav>
+								 <div sec:authorize="isAuthenticated()">
+                                     <div th:if="${isFavorite}">
+                                         <a href="#" onclick="event.preventDefault(); document.getElementById('favorite-form').submit();">&#9829; お気に入り解除</a>
+                                         <form method="post" th:action="@{/favorite/houses/__${house.getId()}__/__${favorite.getId()}__/delete}" id="favorite-form" class="d-none"></form>                                        
+                                     </div>
+                                     <div th:unless="${isFavorite}">
+                                         <a href="#" onclick="event.preventDefault(); document.getElementById('favorite-form').submit();">&#9825; お気に入り追加</a>
+                                         <form method="get" th:action="@{/favorite/houses/__${house.getId()}__/create}" id="favorite-form" class="d-none"></form>                                          
+                                     </div>
+                                 </div>   
+						  </div>				
+					
 
 						<h1 class="mb-4 text-center" th:text="${house.getName()}"></h1>
 
@@ -173,12 +186,12 @@
 												class="btn text-white shadow-sm w-50 mb-4 samuraitravel-btn">レビューを投稿する</button>
 										</div>
 									</form>
-									
-								</div>	
+
+								</div>
 								<div th:if="${#lists.isEmpty(reputationPage)}">
-							<p class="text-center">レビューがありません。</p>
-						</div>																				
-					<div th:unless="${#lists.isEmpty(reputationPage)}">
+									<p class="text-center">レビューがありません。</p>
+								</div>
+								<div th:unless="${#lists.isEmpty(reputationPage)}">
 									<div class="row">
 										<div th:each="reputationPage:${reputationPage}" class="col-sm-6 p-2 g-col-6">
 											<div class="card">
@@ -190,7 +203,7 @@
 															<div
 																th:if="${reputationPage.getUser().getId() == #authentication.principal.user.id}">
 																<a
-																		th:href="@{/houses/__${house.getId()}__/reviews/__${reputationPage.getId()}__/edit}">編集&nbsp;&nbsp;&nbsp;</a>
+																	th:href="@{/houses/__${house.getId()}__/reviews/__${reputationPage.getId()}__/edit}">編集&nbsp;&nbsp;&nbsp;</a>
 																<a href="#" class="samuraitravel-link-danger"
 																	data-bs-toggle="modal"
 																	th:data-bs-target="${'#deleteHouseModal' + reputationPage.getId()}">削除</a>
@@ -218,12 +231,12 @@
 																			</div>
 																		</div>
 																	</div>
-																	
+
 
 																	<!-- 編集リンク -->
-																	
+
 																</div>
-																
+
 															</div>
 														</div>
 													</div>
@@ -251,19 +264,20 @@
 											</div>
 										</div>
 									</div>
-									
+
 									<form method="get" th:action="@{/houses/__${house.getId()}__/reviews/list}">
 										<div class="form-group mt-3 mb-3 text-center">
 											<button type="submit" class="samurai-btn">すべてのレビューを見る</button>
 										</div>
 									</form>
-								
+
+								</div>
+
 							</div>
-						
+						</div>
 					</div>
+					
 				</div>
-			</div>
-			</div>
 		</main>
 
 		<!-- フッター -->
